@@ -1,0 +1,15 @@
+[2024-02-23 10:23:27] = Magrathea2\Exceptions\MagratheaDBException Catch: [2024-02-23_102327] = Incorrect integer value: '' for column `magrathea_cloud`.`_magrathea_config`.`is_system` at row 1
+	 ==> SQL: [INSERT INTO _magrathea_config (`name`,`value`,`is_system`) VALUES (?, ?, ?) ]
+[2024-02-23 10:23:27] = Magrathea2\Exceptions\MagratheaDBException Catch: [2024-02-23_102327] = Incorrect integer value: '' for column `magrathea_cloud`.`_magrathea_config`.`is_system` at row 1
+	 ==> SQL: [INSERT INTO _magrathea_config (`name`,`value`,`is_system`) VALUES (?, ?, ?) ]
+[2024-02-25 09:31:06] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093106] = Could not find class [CloudAdmin]. Are the code folders correct?
+[2024-02-25 09:32:06] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093206] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:32:48] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093248] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:33:28] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093328] = Could not find class [Admin]. Are the code folders correct?
+[2024-02-25 09:33:37] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093337] = Could not find class [CloudAdmin]. Are the code folders correct?
+[2024-02-25 09:33:57] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093357] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:34:38] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093438] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:34:47] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093447] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:34:48] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093448] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:35:21] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_093521] = Could not find class [MagratheaCloudApi]. Are the code folders correct?
+[2024-02-25 09:45:36] = Magrathea2\Exceptions\MagratheaException Catch: [2024-02-25_094536] = Could not find class [ApikeyApi]. Are the code folders correct?
