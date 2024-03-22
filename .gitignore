@@ -2,6 +2,7 @@ _compiled
 sftp-config.json
 magrathea.conf
 logs/*.txt
+logs/*.log
 plugins
 database/*.sql
 cloud/*

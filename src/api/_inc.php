@@ -11,7 +11,7 @@ try {
 		->AddCodeFolder(
 			"CloudApi",
 		)
-		->AddFeature("Apikey", "File", "Sharekey")
+		->AddFeature("Apikey", "File", "Folder", "Sharekey")
 		->Load();
 } catch(Exception $ex) {
 	\Magrathea2\p_r($ex);

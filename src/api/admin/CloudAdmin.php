@@ -3,6 +3,7 @@
 namespace MagratheaCloud;
 use MagratheaCloud\Apikey\ApikeyAdmin;
 use MagratheaCloud\File\FileAdmin;
+use MagratheaCloud\Folder\FolderAdmin;
 use MagratheaCloud\Sharekey\SharekeyAdmin;
 
 include("api.php");
@@ -18,12 +19,15 @@ class CloudAdmin extends \Magrathea2\Admin\Admin implements \Magrathea2\Admin\iA
 	public function Initialize() {
 		$this->SetTitle("Magrathea Images Admin");
 		$this->SetPrimaryColor("#910e04");
-		$this->LoadApi();
-		$this->LoadFeatures();
 	}
 
 	public function Auth($user): bool {
 		return !empty($user->id);
+	}
+
+	public function SetFeatures() {
+		$this->LoadApi();
+		$this->LoadFeatures();
 	}
 
 	public function LoadApi() {
@@ -35,9 +39,12 @@ class CloudAdmin extends \Magrathea2\Admin\Admin implements \Magrathea2\Admin\iA
 	}
 
 	public function LoadFeatures(){
-		$this->features["appconfig"] = new AdminFeatureAppConfig(true);
+		$appConfig = new AdminFeatureAppConfig(true);
+		$appConfig->test = "Feature Admin";
+		$this->features["appconfig"] = $appConfig;
 		$this->features["apikey"] = new ApikeyAdmin();
 		$this->features["file"] = new FileAdmin();
+		$this->features["folder"] = new FolderAdmin();
 		$this->features["sharekey"] = new SharekeyAdmin();
 		$this->AddFeaturesArray($this->features);
 	}
@@ -50,6 +57,7 @@ class CloudAdmin extends \Magrathea2\Admin\Admin implements \Magrathea2\Admin\iA
 		->Add($menu->CreateTitle("Features"))
 		->Add($this->features["apikey"]->GetMenuItem())
 		->Add($this->features["file"]->GetMenuItem())
+		->Add($this->features["folder"]->GetMenuItem())
 		->Add($this->features["sharekey"]->GetMenuItem())
 
 		->Add($menu->CreateTitle("Api"))

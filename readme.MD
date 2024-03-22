@@ -11,3 +11,13 @@ docker-compose exec mag_sql sh -c 'mariadb -uroot -proot'
 CREATE DATABASE magrathea_cloud;
 GRANT ALL PRIVILEGES ON user.* TO 'user'@'%' WITH GRANT OPTION;
 ```
+
+### APP Configuration:
+```
+==[n]app_name==|>>MagratheaCloud>>;;
+==[s]code_path==|>>/var/www/html/api>>;;
+==[s]code_structure==|>>feature>>;;
+==[s]code_namespace==|>>MagratheaCloud>>;;
+```
+
+
