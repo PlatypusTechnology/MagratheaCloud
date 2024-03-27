@@ -7,4 +7,8 @@ class ApikeyApi extends \Magrathea2\MagratheaApiControl {
 		$this->service = new ApikeyControl();
 	}
 
+	public function GetAll() {
+		return $this->List();
+	}
+
 }

@@ -2,6 +2,7 @@
 
 namespace MagratheaCloud;
 
+use Animateka\Authentication\AuthApi;
 use Magrathea2\Config;
 use Magrathea2\MagratheaApi;
 use MagratheaCloud\Apikey\ApikeyApi;
@@ -13,6 +14,7 @@ class MagratheaCloudApi extends MagratheaApi {
 	const LOGGED = "IsLogged";
 	const ADMIN = "IsAdmin"; //
 
+	
 	public function __construct() {
 		$this->Initialize();
 	}
@@ -24,6 +26,7 @@ class MagratheaCloudApi extends MagratheaApi {
 			"Access-Control-Allow-Origin",
 			"cache-control",
 			"x-requested-with",
+			"content-type",
 		]);
 		$this->SetAuth();
 		$this->SetUrl();
@@ -31,10 +34,10 @@ class MagratheaCloudApi extends MagratheaApi {
 	}
 
 	private function SetAuth() {
-		$authApi = new \Magrathea2\MagratheaApiAuth();
+		$authApi = new AuthApi();
 		$this->BaseAuthorization($authApi, self::LOGGED);
 		$this->Add("GET", "token", $authApi, "GetTokenInfo", self::OPEN);
-//		$this->Add("POST", "login", $authApi, "Login", self::OPEN);
+		$this->Add("POST", "login", $authApi, "Login", self::OPEN);
 	}
 
 	private function SetUrl() {

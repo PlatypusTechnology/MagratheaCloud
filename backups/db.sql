@@ -3,9 +3,7 @@ DROP TABLE IF EXISTS `apikey`;
 CREATE TABLE `apikey` (
 	`id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	`val` varchar(255) NOT NULL,
-	`uses` bigint(20) NOT NULL DEFAULT 0,
-	`usage_limit` bigint(20) DEFAULT NULL,
-	`expiration` date DEFAULT NULL,
+	`media_folder` varchar(255) NOT NULL,
 	`active` tinyint(1) NOT NULL DEFAULT 1,
 	`created_at` timestamp NULL DEFAULT current_timestamp(),
 	`updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
