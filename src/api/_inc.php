@@ -3,12 +3,11 @@
 use MagratheaCloud\File\File;
 
 require "../vendor/autoload.php";
-//include("shared/Helper.php");
 
 try {
 	Magrathea2\MagratheaPHP::Instance()
 		->AppPath(realpath(dirname(__FILE__)))
-		->AddCodeFolder("CloudApi")
+		->AddCodeFolder("CloudApi", "shared")
 		->AddCodeFolder(__DIR__."/Authentication")
 		->AddFeature("Apikey", "File", "Folder", "Sharekey")
 		->Load();

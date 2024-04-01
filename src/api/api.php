@@ -4,6 +4,7 @@ namespace MagratheaCloud;
 
 use Animateka\Authentication\AuthApi;
 use Magrathea2\Config;
+use Magrathea2\Exceptions\MagratheaApiException;
 use Magrathea2\MagratheaApi;
 use MagratheaCloud\Apikey\ApikeyApi;
 
@@ -28,9 +29,23 @@ class MagratheaCloudApi extends MagratheaApi {
 			"x-requested-with",
 			"content-type",
 		]);
-		$this->SetAuth();
 		$this->SetUrl();
+		$this->SetAuth();
+		$this->OtherEndpoints();
 		$this->AddApikey();
+	}
+
+	private function SetUrl() {
+		$url = Config::Instance()->Get("app_url");
+		$this->SetAddress($url);
+	}
+
+	private function OtherEndpoints() {
+		$this->Add("POST", "clean", null, function($params) {
+			$str = @$_POST["string"];
+			if(!$str) throw new MagratheaApiException("empty string for cleaning (POST['string'])");
+			return CloudHelper::cleanString($str);
+		}, self::OPEN);
 	}
 
 	private function SetAuth() {
@@ -40,16 +55,11 @@ class MagratheaCloudApi extends MagratheaApi {
 		$this->Add("POST", "login", $authApi, "Login", self::OPEN);
 	}
 
-	private function SetUrl() {
-		$url = Config::Instance()->Get("app_url");
-		$this->SetAddress($url);
-	}
-
 	private function AddApikey() {
 		$api = new ApikeyApi();
+		$this->Add("POST", "keys", $api, "Create", self::LOGGED);
 		$this->Add("GET", "keys", $api, "GetAll", self::LOGGED);
 		$this->Add("GET", "key/:key/view", $api, "GetByKey", self::OPEN);
-		$this->Add("GET", "key/:key/images", $api, "ViewImages", self::OPEN);
 	}
 
 }

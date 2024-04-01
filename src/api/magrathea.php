@@ -1,5 +1,5 @@
 <?php
-
+die;
 include("_inc.php");
 
 use Magrathea2\Admin\Admin;

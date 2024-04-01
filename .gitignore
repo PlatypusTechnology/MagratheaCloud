@@ -17,3 +17,5 @@ Magrathea/
 log*.txt
  
 .DS_Store
+
+medias/*
