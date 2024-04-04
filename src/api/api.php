@@ -7,6 +7,7 @@ use Magrathea2\Config;
 use Magrathea2\Exceptions\MagratheaApiException;
 use Magrathea2\MagratheaApi;
 use MagratheaCloud\Apikey\ApikeyApi;
+use MagratheaCloud\Crawl\CrawlApi;
 
 class MagratheaCloudApi extends MagratheaApi {
 
@@ -33,6 +34,7 @@ class MagratheaCloudApi extends MagratheaApi {
 		$this->SetAuth();
 		$this->OtherEndpoints();
 		$this->AddApikey();
+		$this->AddCrawl();
 	}
 
 	private function SetUrl() {
@@ -60,6 +62,17 @@ class MagratheaCloudApi extends MagratheaApi {
 		$this->Add("POST", "keys", $api, "Create", self::LOGGED);
 		$this->Add("GET", "keys", $api, "GetAll", self::LOGGED);
 		$this->Add("GET", "key/:key/view", $api, "GetByKey", self::OPEN);
+	}
+
+	private function AddCrawl() {
+		$api = new CrawlApi();
+//		$this->Crud("crawl", $api, self::LOGGED);
+		$this->Add("GET", "key/:key/crawls", $api, "GetByApi", self::LOGGED, "get crawls by key");
+		$this->Add("POST", "key/:key/crawl", $api, "CreateByKey", self::LOGGED, "create a crawl");
+		$this->Add("GET", "crawls/status", $api, "GetEnumCrawlStatus", self::OPEN);
+		$this->Add("POST", "key/:key/crawl/:crawl/execute", $api, "ExecuteCrawl", self::LOGGED, "execute");
+		$this->Add("GET", "key/:key/crawl/:crawl/report", $api, "ViewReport", self::LOGGED, "returns crawl report");
+		$this->Add("GET", "test", $api, "Test",  self::OPEN);
 	}
 
 }

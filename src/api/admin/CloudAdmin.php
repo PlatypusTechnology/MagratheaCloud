@@ -10,6 +10,7 @@ use Magrathea2\Admin\Features\ApiExplorer\ApiExplorer;
 use Magrathea2\Admin\Features\AppConfig\AdminFeatureAppConfig;
 
 use MagratheaCloud\Apikey\ApikeyAdmin;
+use MagratheaCloud\Crawl\CrawlAdmin;
 use MagratheaCloud\File\FileAdmin;
 use MagratheaCloud\Folder\FolderAdmin;
 use MagratheaCloud\Sharekey\SharekeyAdmin;
@@ -64,6 +65,7 @@ class CloudAdmin extends Admin implements \Magrathea2\Admin\iAdmin {
 		$this->features["file"] = new FileAdmin();
 		$this->features["folder"] = new FolderAdmin();
 		$this->features["sharekey"] = new SharekeyAdmin();
+		$this->features["crawl"] = new CrawlAdmin();
 		$this->AddFeaturesArray($this->features);
 	}
 
@@ -80,6 +82,7 @@ class CloudAdmin extends Admin implements \Magrathea2\Admin\iAdmin {
 		->Add($this->features["file"]->GetMenuItem())
 		->Add($this->features["folder"]->GetMenuItem())
 		->Add($this->features["sharekey"]->GetMenuItem())
+		->Add($this->features["crawl"]->GetMenuItem())
 
 		->Add($menu->CreateSpace())
 		->Add($menu->CreateSpace())

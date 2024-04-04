@@ -7,5 +7,4 @@ class Folder extends \MagratheaCloud\Folder\Base\FolderBase {
 		parent::__construct($id);
 	}
 
-	// model code goes here!
 }

@@ -43,6 +43,22 @@ class CloudHelper {
 		return $val;
 	}
 
+	public static function GetFileType(string $extension): string {
+		$types = [
+			"image" => [ "png", "jpg", "jpeg", "bmp", "gif" ],
+			"code" => [ "md" ],
+			"text" => [ "txt", "doc" ],
+			"book" => [ "epub", "mobi" ],
+			"video" => [ "mp4" ],
+		];
+		foreach ($types as $type => $values) {
+			if (in_array($extension, $values)) {
+				return $type;
+			}
+		}
+		return $extension." file";
+	}
+
 	public static function IsGDWorking(): bool {
 		return function_exists('gd_info');
 	}

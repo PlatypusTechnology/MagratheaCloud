@@ -39,7 +39,7 @@ class ApikeyControl extends \MagratheaCloud\Apikey\Base\ApikeyControlBase {
 	}
 
 	public function CreateKey($tries=0): string {
-		$length = 20;
+		$length = rand(20, 30);
 		$key = MagratheaHelper::RandomString($length);
 		if(!$this->AssertKeyNotInUse($key)) {
 			$tries = $tries + 1;

@@ -4,7 +4,7 @@ magrathea.conf
 logs/*.txt
 logs/*.log
 plugins
-database/*.sql
+backups/*.sql
 cloud/*
 
 docker/.env
