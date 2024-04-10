@@ -3,6 +3,7 @@ namespace MagratheaCloud\Crawl;
 
 use Magrathea2\Exceptions\MagratheaApiException;
 use Magrathea2\MagratheaApi;
+use MagratheaCloud\ApiHelper;
 use MagratheaCloud\Apikey\ApikeyControl;
 
 class CrawlApi extends \Magrathea2\MagratheaApiControl {
@@ -12,11 +13,7 @@ class CrawlApi extends \Magrathea2\MagratheaApiControl {
 	}
 	
 	private function _GetKey($params) {
-		$key = $params["key"];
-		if(empty($key)) {
-			throw new MagratheaApiException("key [".$key."] is empty", true, 404, $params);
-		}
-		return $key;
+		return ApiHelper::GetKey($params);
 	}
 	private function _GetCrawl($params) {
 		$key = $this->_GetKey($params);

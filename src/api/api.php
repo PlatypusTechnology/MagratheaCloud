@@ -8,6 +8,8 @@ use Magrathea2\Exceptions\MagratheaApiException;
 use Magrathea2\MagratheaApi;
 use MagratheaCloud\Apikey\ApikeyApi;
 use MagratheaCloud\Crawl\CrawlApi;
+use MagratheaCloud\File\FileApi;
+use MagratheaCloud\Folder\FolderApi;
 
 class MagratheaCloudApi extends MagratheaApi {
 
@@ -35,6 +37,7 @@ class MagratheaCloudApi extends MagratheaApi {
 		$this->OtherEndpoints();
 		$this->AddApikey();
 		$this->AddCrawl();
+		$this->AddExplorer();
 	}
 
 	private function SetUrl() {
@@ -73,6 +76,20 @@ class MagratheaCloudApi extends MagratheaApi {
 		$this->Add("POST", "key/:key/crawl/:crawl/execute", $api, "ExecuteCrawl", self::LOGGED, "execute");
 		$this->Add("GET", "key/:key/crawl/:crawl/report", $api, "ViewReport", self::LOGGED, "returns crawl report");
 		$this->Add("GET", "test", $api, "Test",  self::OPEN);
+	}
+
+	public function AddExplorer() {
+		$fileApi = new FileApi();
+		$folderApi = new FolderApi();
+		$keyApi = new ApikeyApi();
+		$this->Add("GET", "key/:key/files", $fileApi, "GetAllFromKey", self::LOGGED);
+		$this->Add("GET", "key/:key/file/:file_id", $fileApi, "GetFile", self::LOGGED);
+		$this->Add("POST", "key/:key/upload", $fileApi, "Upload", self::LOGGED);
+		$this->Add("GET", "key/:key/download/:file_id", $fileApi, "Download", self::LOGGED);
+		$this->Add("GET", "key/:key/image/:file_id", $fileApi, "GetAsImage", self::OPEN);
+		$this->Add("GET", "key/:key/folders", $folderApi, "GetAllFromKey", self::LOGGED);
+		$this->Add("POST", "key/:key/folder", $folderApi, "CreateFolder", self::LOGGED);
+		$this->Add("GET", "key/:key/explore", $keyApi, "Explore", self::OPEN);
 	}
 
 }

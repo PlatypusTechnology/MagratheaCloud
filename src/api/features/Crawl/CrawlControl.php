@@ -50,20 +50,20 @@ class CrawlControl extends \MagratheaCloud\Crawl\Base\CrawlControlBase {
 		return $this->Run($query);
 	}
 
-	public function CheckIfFolderExists($key, $location, $name) {
-		return $this->RunExistsQuery("folders", $key, $location, $name);
+	public function CheckIfFolderExists($key, $locationId, $name) {
+		return $this->RunExistsQuery("folders", $key, $locationId, $name);
 	}
 
-	public function CheckIfFileExists($key, $location, $name) {
-		return $this->RunExistsQuery("files", $key, $location, $name);
+	public function CheckIfFileExists($key, $locationId, $name) {
+		return $this->RunExistsQuery("files", $key, $locationId, $name);
 	}
 
-	public function RunExistsQuery($table, $key, $location, $name): bool {
+	public function RunExistsQuery($table, $key, $locationId, $name): bool {
 		$query = Query::Select("count(1)")
 			->Table($table)
 			->Where([
 				"apikey_id" => $key,
-				"location" => $location,
+				"location_id" => $locationId,
 				"name" => $name,
 			]);
 		$rs = $this->QueryOne($query);

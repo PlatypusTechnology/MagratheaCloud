@@ -45,11 +45,12 @@ class CloudHelper {
 
 	public static function GetFileType(string $extension): string {
 		$types = [
-			"image" => [ "png", "jpg", "jpeg", "bmp", "gif" ],
-			"code" => [ "md" ],
+			"image" => ["jpg", "jpeg", "png", "bmp", "gif", "webp", "wbmp", "svg", "ico"],
+			"code" => [ "md", "js", "php", "json" ],
 			"text" => [ "txt", "doc" ],
 			"book" => [ "epub", "mobi" ],
 			"video" => [ "mp4" ],
+			"database" => [ "db", "sql" ],
 		];
 		foreach ($types as $type => $values) {
 			if (in_array($extension, $values)) {

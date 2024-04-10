@@ -9,6 +9,7 @@ use Magrathea2\MagratheaHelper;
 use MagratheaCloud\Explorer;
 use MagratheaCloud\File\File;
 use MagratheaCloud\Folder\Folder;
+use MagratheaCloud\Folder\FolderControl;
 
 use function Magrathea2\now;
 use function Magrathea2\p_r;
@@ -38,7 +39,7 @@ class CrawlExecuter {
 		if(!$this->Start()) return false;
 		try {
 			$this->explorer->SetCrawlFolder($this->crawl->GetFolderKey());
-			$this->CrawlFolder("/");
+			$this->CrawlFolder("/", null);
 			$this->End();
 		} catch(\Exception $ex) {
 			$this->LogError($ex->getMessage());
@@ -47,43 +48,48 @@ class CrawlExecuter {
 		return $this->GenerateReport();
 	}
 
-	public function CrawlFolder($folder) {
+	public function CrawlFolder($folder, $folderId=null) {
 		$folder = MagratheaHelper::EnsureTrailingSlash($folder);
 		$data = $this->explorer->GetFolderData($folder);
 		foreach($data as $item) {
 			if($item["type"] == "folder") {
-				$this->CreateFolder($folder, $item["item"]);
-				$f = $folder.$item["item"];
-				$this->CrawlFolder($f);
+				$f = $this->CreateFolder($folder, $item["item"], $folderId);
+				$next = $folder.$item["item"];
+				$this->CrawlFolder($next, $f->id);
 			} else {
-				$this->CreateFile($folder, $item["item"]);
+				$this->CreateFile($folder, $item["item"], $folderId);
 			}
 		}
 	}
 
-	public function CreateFolder(string $location, string $name) {
+	public function CreateFolder(string $location, string $name, $folderId=null) {
+		$folderControl = new FolderControl();
 		$this->Log("Folder [".$name."] found at [".$location."]");
-		if($this->control->CheckIfFolderExists($this->keyId, $location, $name)) return true;
+		$folder = $folderControl->GetFolderIfExists($this->keyId, $folderId, $name);
+		if($folder) return $folder;
 		$folder = new Folder();
 		$folder->name = $name;
+		$folder->foldername = $name;
 		$folder->location = $location;
+		$folder->location_id = $folderId;
 		$folder->apikey_id = $this->keyId;
 		$rs = $folder->Insert();
 		$this->Log("Folder [".$name."] inserted with id [".$rs."]");
-		return true;
+		return $folder;
 	}
-	public function CreateFile(string $location, string $name) {
+	public function CreateFile(string $location, string $name, $folderId=null) {
 		$this->Log("File [".$name."] found at [".$location."]");
-		if($this->control->CheckIfFileExists($this->keyId, $location, $name)) return true;
+		if($this->control->CheckIfFileExists($this->keyId, $folderId, $name)) return true;
 		$file = new File();
 		$file->keyFolder = $this->crawl->GetFolderKey();
-		$file->name = $name;
+		$file->SetFile($name);
 		$file->location = $location;
+		$file->location_id = $folderId;
 		$file->apikey_id = $this->keyId;
 		$file->GetFileData();
 		$rs = $file->Insert();
 		$this->Log("File [".$name."] inserted with id [".$rs."]");
-		return true;
+		return $file;
 	}
 
 	public function Start() {

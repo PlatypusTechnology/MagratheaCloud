@@ -9,6 +9,8 @@ use Magrathea2\Exceptions\MagratheaModelException;
 use Magrathea2\MagratheaHelper;
 use MagratheaCloud\CloudHelper;
 use MagratheaCloud\Explorer;
+use MagratheaCloud\File\File;
+use MagratheaCloud\Folder\Folder;
 
 class ApikeyControl extends \MagratheaCloud\Apikey\Base\ApikeyControlBase {
 

@@ -2,6 +2,10 @@
 namespace MagratheaCloud\Apikey;
 
 use Magrathea2\Exceptions\MagratheaApiException;
+use Magrathea2\MagratheaApi;
+use MagratheaCloud\File\FileControl;
+use MagratheaCloud\Folder\Folder;
+use MagratheaCloud\Folder\FolderControl;
 
 class ApikeyApi extends \Magrathea2\MagratheaApiControl {
 	public function __construct() {
@@ -22,6 +26,53 @@ class ApikeyApi extends \Magrathea2\MagratheaApiControl {
 		$control = new ApikeyControl();
 		$api = $control->Create($name);
 		return $api;
+	}
+
+	private function ExploreFolders($keyId, $parent) {
+		$folderControl = new FolderControl();
+		$folders = $folderControl->GetFolders($keyId, $parent);
+		return array_map(function($f) {
+			return [
+				"id" => $f->id,
+				"type" => "folder",
+				"name" => $f->name,
+				"size" => null,
+				"created" => $f->created_at,
+			];
+		}, $folders);
+	}
+	private function ExploreFiles($keyId, $parent) {
+		$fileControl = new FileControl();
+		$files = $fileControl->GetFiles($keyId, $parent);
+		return array_map(function($f) {
+			return [
+				"id" => $f->id,
+				"type" => $f->type,
+				"name" => $f->name.".".$f->extension,
+				"size" => $f->size,
+				"created" => $f->sent_at,
+			];
+		}, $files);
+	}
+	public function Explore($params) {
+		$key = $this->_GetKey($params);
+		$folderId = @$_GET["folder"];
+		$parent = "/";
+		if($folderId) {
+			$folder = new Folder($folderId);
+			if($folder->apikey_id !== $key->id) {
+				throw new MagratheaApiException("Folder does not belong to key");
+			}
+			$parent = $folder->location.$folder->name;
+		}
+		return [
+			"parent_id" => $folderId,
+			"location" => $parent,
+			"content" => [
+				...$this->ExploreFolders($key->id, $parent),
+				...$this->ExploreFiles($key->id, $parent),
+			],
+		];
 	}
 
 	private function _GetKey($params): Apikey {
