@@ -55,6 +55,7 @@ class CrawlControl extends \MagratheaCloud\Crawl\Base\CrawlControlBase {
 	}
 
 	public function CheckIfFileExists($key, $locationId, $name) {
+		$name = Query::Clean($name);
 		return $this->RunExistsQuery("files", $key, $locationId, $name);
 	}
 

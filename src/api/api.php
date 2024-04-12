@@ -62,7 +62,7 @@ class MagratheaCloudApi extends MagratheaApi {
 
 	private function AddApikey() {
 		$api = new ApikeyApi();
-		$this->Add("POST", "keys", $api, "Create", self::LOGGED);
+		$this->Add("POST", "keys", $api, "Create", self::LOGGED, "creates key (send 'media_folder' or 'name')");
 		$this->Add("GET", "keys", $api, "GetAll", self::LOGGED);
 		$this->Add("GET", "key/:key/view", $api, "GetByKey", self::OPEN);
 	}
