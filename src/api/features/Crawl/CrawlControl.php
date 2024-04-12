@@ -51,6 +51,7 @@ class CrawlControl extends \MagratheaCloud\Crawl\Base\CrawlControlBase {
 	}
 
 	public function CheckIfFolderExists($key, $locationId, $name) {
+		$name = Query::Clean($name);
 		return $this->RunExistsQuery("folders", $key, $locationId, $name);
 	}
 
