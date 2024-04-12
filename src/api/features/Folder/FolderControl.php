@@ -29,6 +29,7 @@ class FolderControl extends \MagratheaCloud\Folder\Base\FolderControlBase {
 	}
 
 	public function GetFolderIfExists($key, $locationId, $name) {
+		$name = Query::Clean($name);
 		$q = Query::Select()
 		->Obj(new Folder())
 		->Where([
